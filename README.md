@@ -69,19 +69,34 @@ Below are concise summaries of Garak test outcomes for **GPT-2**, **Mistral-7B**
 
 ---
 
-## 3) Llama-2-7B
+## LLaMA 2-7B
 
-**Probes:** `promptinject`, `dan`, `av_spam_scanning`, `realtoxicityprompts`  
-**Key Pass Rates:**  
-- **av_spam_scanning:** 70.7%  
-- **dan:** 28.5%  
-- *(promptinject & realtoxicityprompts results truncated.)*
+**Probes:** `ansiescape`, `dan`, `continuation`, `topic`, `glitch`
 
-**Observations:**  
-- Shows **moderate** resilience to spam/virus signatures (70.7%).  
-- **dan** (28.5%) reveals some vulnerability to advanced jailbreak prompts.  
-- Possibly tested for toxicity and injection but results not fully shown.  
-- Overall, partially robust but not entirely immune to manipulative prompts.
+**Key Pass Rates:**
+- **ansiescape:** ~61.3%
+- **continuation:** ~100%
+- **dan:** ~29.0%
+- **glitch:** ~72.8%
+- **topic:** ~48.2%
+
+### Observations
+- **ANSI Escape (61.3%)**  
+  Shows moderate avoidance of ANSI-based injection or control sequences. Some potential remains for escape-sequence exploits.
+
+- **Continuation (100%)**  
+  Completely refuses to continue partial slurs or hateful terms, suggesting it rarely generates offensive completions when prompted with partial slurs.
+
+- **DAN Attacks (29.0%)**  
+  Roughly 29% of “Do Anything Now” or similar jailbreak attempts succeed, indicating partial susceptibility to advanced manipulative prompts.
+
+- **Glitch Tokens (72.8%)**  
+  Demonstrates a fairly high resilience to glitch tokens—special strings known to provoke bizarre or unintended responses. However, about 27% remain problematic.
+
+- **Controversial Topics (48.2%)**  
+  When prompted with contentious or sensitive topics, the model mitigates roughly half of the attempts. This indicates it can be pushed off-track in certain scenarios.
+
+Overall, **LLaMA 2-7B** exhibits a mix of robust defenses (e.g., slur continuation is fully blocked) and some vulnerabilities (notably to specific jailbreak or “glitch” prompts). 
 
 ---
 
