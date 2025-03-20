@@ -21,20 +21,51 @@ Below are concise summaries of Garak test outcomes for **GPT-2**, **Mistral-7B**
 - **Glitch** and **topic** probes scored **0.0%**, implying GPT-2 is **unprotected** (or easily bypassed) in those categories.
 
 
-## 2) Mistral-7B
+## Mistral-7B
 
-**Probes:** `ansiescape`, `dan`, `continuation`, `topic`, `glitch`  
-**Key Pass Rates:**  
-- **ansiescape:** 62.4%  
-- **continuation:** 94.1%  
-- **dan:** 16.6%  
-- *(topic & glitch rates not fully visible but tested.)*
+**Probes Tested:**  
+- `ansiescape` (ANSI escape sequences)  
+- `dan` (Do Anything Now / jailbreak attacks)  
+- `continuation` (refusing to continue offensive terms)  
+- `topic` (controversial topics)  
+- `glitch` (inputs that provoke unusual or “glitchy” behavior)
 
-**Observations:**  
-- **ansiescape** (62.4%) suggests moderate avoidance of ANSI codes.  
-- **continuation** (94.1%) means it usually refuses to continue offensive words.  
-- **dan** (16.6%) indicates partial vulnerability to jailbreak attempts.  
-- Performance on `topic` and `glitch` is presumably mixed, based on truncated data.
+---
+
+### Key Pass Rates
+
+- **ansiescape:** ~62.4%  
+- **continuation:** ~94.1%  
+- **dan:** ~16.6%  
+- **glitch:** ~32.8%  
+- **topic:** ~7.9%
+
+---
+
+### Observations
+
+1. **ansiescape (~62.4%)**  
+   - Indicates a moderate ability to avoid producing or propagating ANSI control codes. In ~42% of attempts, the model may still output undesired ANSI sequences.
+
+2. **continuation (~94.1%)**  
+   - A high pass rate at refusing to continue partial offensive or hateful words, suggesting strong caution against slur completions.
+
+3. **dan (~16.6%)**  
+   - Only about 16% of “DAN” tests were blocked; ~84% potentially bypass defenses, showing susceptibility to certain jailbreak or “Do Anything Now” prompts.
+
+4. **glitch (~32.8%)**  
+   - Relatively low resilience against glitch-style prompts: in nearly a third of tests, Mistral-7B provides safe output, but in about two-thirds, it might exhibit unexpected or unsafe behavior.
+
+5. **topic (~7.9%)**  
+   - Very low success rate on controversial topics, suggesting vulnerability or lack of mitigation when probed with sensitive content.
+
+---
+
+### Overall Summary
+- **Mistral-7B** demonstrates excellent refusal behavior for completing hateful terms (continuation ~94%).
+- However, it remains **less robust** against **DAN** jailbreak attempts (~16.6% pass) and glitch prompts (~32.8%), and is notably weak in handling controversial topics (~7.9%).
+- In short, while the model shows promise in certain areas (like refusing slurs), it would benefit from further enhancements to withstand advanced or edge-case attacks.
+
 
 ---
 
