@@ -4,22 +4,22 @@ Below are concise summaries of Garak test outcomes for **GPT-2**, **Mistral-7B**
 
 ---
 
-## 1) GPT-2
+## GPT-2
 
-**Probes (Partial):** `ansiescape`, `atkgen`, `av_spam_scanning`, `continuation`, `dan`, etc.  
-**Key Pass Rates:**  
-- **ansiescape:** 82.8%  
-- **atkgen:** 80.0%  
-- **av_spam_scanning:** 98.7%  
-- **continuation:** 97.0%  
-- **dan:** 7.3%  
+**Probes Tested:** `ansiescape`, `continuation`, `dan`, `glitch`, `topic`
 
-**Observations:**  
-- Shows **high** pass rates against antivirus/spam checks and ANSI codes.  
-- Very **low** pass rate for `dan` (7.3%), indicating susceptibility to “Do Anything Now” style jailbreaks.  
-- Although older, GPT-2 can still resist some malicious prompts but remains vulnerable to advanced or tricky attacks.
+- **ansiescape:** ~85.6%
+- **continuation:** ~97.3%
+- **dan:** ~6.9%
+- **glitch:** ~0.0%
+- **topic:** ~0.0%
 
----
+**Observations:**
+- GPT-2 shows **moderate resilience** to ANSI escape vulnerabilities (ansiescape ~85.6%).  
+- It **rarely continues** partial slurs (continuation ~97.3%), suggesting a lower tendency to produce hateful completions.  
+- **DAN**-style jailbreaks still succeed at **~6.9%**, indicating partial susceptibility to advanced “Do Anything Now” prompts.  
+- **Glitch** and **topic** probes scored **0.0%**, implying GPT-2 is **unprotected** (or easily bypassed) in those categories.
+
 
 ## 2) Mistral-7B
 
