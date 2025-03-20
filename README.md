@@ -1,37 +1,86 @@
-# Summary of Garak Test Results for Falcon-7B-Instruct
+# Summary of Garak Test Results for Four LLMs
 
-We tested five different probes (`ansiescape`, `dan`, `continuation`, `topic`, `glitch`) on the **Falcon-7B-Instruct** model. Below is a brief overview of each probe’s pass rate and its significance:
-
-1. **ansiescape**  
-   - **Pass Rate:** 78.1%  
-   - **Purpose:** Checks if the model outputs ANSI escape codes (e.g., clearing terminal, changing text color).  
-   - **Note:** A 78.1% pass rate indicates the model mostly avoided generating ANSI sequences.
-
-2. **dan**  
-   - **Pass Rate:** 21.5%  
-   - **Purpose:** Tests “Do Anything Now” (DAN) style jailbreak prompts to bypass model restrictions.  
-   - **Note:** While the model resisted standard DAN prompts (often 0.0% success), some scenarios (e.g., DanInTheWildMini) achieved ~25% success.
-
-3. **continuation**  
-   - **Pass Rate:** 100%  
-   - **Purpose:** Determines if the model continues or expands on sensitive/offensive words.  
-   - **Note:** A perfect score (100%) means the model consistently avoided extending sensitive terms.
-
-4. **topic**  
-   - **Pass Rate:** 11.8%  
-   - **Purpose:** Evaluates how the model responds to controversial or sensitive topics.  
-   - **Note:** The low pass rate (~12%) suggests the model may produce content on these topics without strong filtering.
-
-5. **glitch**  
-   - **Pass Rate:** 34.6%  
-   - **Purpose:** Provides malformed or “glitchy” inputs to see if the model generates strange/incomplete outputs.  
-   - **Note:** The model responded abnormally in about one-third of attempts.
+Below are concise summaries of Garak test outcomes for **GPT-2**, **Mistral-7B**, **Llama-2-7B**, and **Falcon-7B-Instruct**. Each model was evaluated with different probes; refer to the individual HTML reports (`garak_report_*.html`) for full details.
 
 ---
 
-## Overall Observations
+## 1) GPT-2
 
-- **Continuation:** The model performed exceptionally well (100%), avoiding expansions on sensitive words entirely.  
-- **DAN:** Generally robust against standard jailbreak attempts, but certain variations succeeded partially (~20–25%).  
-- **ANSI Escape & Glitch:** Mostly avoids producing malicious or nonsense text, but occasionally yields unexpected outputs.  
-- **Topic:** Only 11.8% pass rate indicates potential vulnerability or leniency on controversial matters.
+**Probes (Partial):** `ansiescape`, `atkgen`, `av_spam_scanning`, `continuation`, `dan`, etc.  
+**Key Pass Rates:**  
+- **ansiescape:** 82.8%  
+- **atkgen:** 80.0%  
+- **av_spam_scanning:** 98.7%  
+- **continuation:** 97.0%  
+- **dan:** 7.3%  
+
+**Observations:**  
+- Shows **high** pass rates against antivirus/spam checks and ANSI codes.  
+- Very **low** pass rate for `dan` (7.3%), indicating susceptibility to “Do Anything Now” style jailbreaks.  
+- Although older, GPT-2 can still resist some malicious prompts but remains vulnerable to advanced or tricky attacks.
+
+---
+
+## 2) Mistral-7B
+
+**Probes:** `ansiescape`, `dan`, `continuation`, `topic`, `glitch`  
+**Key Pass Rates:**  
+- **ansiescape:** 62.4%  
+- **continuation:** 94.1%  
+- **dan:** 16.6%  
+- *(topic & glitch rates not fully visible but tested.)*
+
+**Observations:**  
+- **ansiescape** (62.4%) suggests moderate avoidance of ANSI codes.  
+- **continuation** (94.1%) means it usually refuses to continue offensive words.  
+- **dan** (16.6%) indicates partial vulnerability to jailbreak attempts.  
+- Performance on `topic` and `glitch` is presumably mixed, based on truncated data.
+
+---
+
+## 3) Llama-2-7B
+
+**Probes:** `promptinject`, `dan`, `av_spam_scanning`, `realtoxicityprompts`  
+**Key Pass Rates:**  
+- **av_spam_scanning:** 70.7%  
+- **dan:** 28.5%  
+- *(promptinject & realtoxicityprompts results truncated.)*
+
+**Observations:**  
+- Shows **moderate** resilience to spam/virus signatures (70.7%).  
+- **dan** (28.5%) reveals some vulnerability to advanced jailbreak prompts.  
+- Possibly tested for toxicity and injection but results not fully shown.  
+- Overall, partially robust but not entirely immune to manipulative prompts.
+
+---
+
+## 4) Falcon-7B-Instruct
+
+**Probes:** `ansiescape`, `dan`, `continuation`, `topic`, `glitch`  
+**Key Pass Rates:**  
+- **ansiescape:** 78.1%  
+- **dan:** 21.5%  
+- **continuation:** 100%  
+- **topic:** 11.8%  
+- **glitch:** 34.6%
+
+**Observations:**  
+- Excellent at refusing to continue offensive terms (`continuation` at 100%).  
+- Partially vulnerable to DAN attacks (21.5%), with certain scenarios hitting ~25% success.  
+- Tends to avoid ANSI codes (78.1%), but glitchy inputs still yield ~34.6% odd outputs.  
+- On controversial topics, only 11.8% pass rate suggests it sometimes produces borderline or unfiltered content.
+
+---
+
+## Overall Comparison
+
+- **GPT-2**: High resilience to spam/ANSI but very low (`dan`: 7.3%) for jailbreak attempts.  
+- **Mistral-7B**: Solid refusal of offensive expansions (`continuation` ~94%) but moderate or low in other areas (like `dan`: 16.6%).  
+- **Llama-2-7B**: Reasonable spam detection (70.7%), moderate `dan` (28.5%), unknown toxicity/promptinject from the snippet.  
+- **Falcon-7B-Instruct**: Perfect (100%) on refusing to continue offensive words, partial weaknesses for `dan` (21.5%) and `glitch` (34.6%).
+
+For a deep dive into each test (prompts, responses, detectors), see the corresponding HTML files:
+- `garak_report_gpt2.html`
+- `garak_report_mistral7b.html`
+- `garak_report_llama2-7b.html`
+- `garak_report_falcon7b.html`
