@@ -1,12 +1,13 @@
-# Summary of Garak Test Results for Four LLMs
+# LLM Vulnerability Scans with Garak
 
-Below is a concise overview of the **Garak** test outcomes for **GPT-2**, **Mistral-7B**, **LLaMA 2-7B**, and **Falcon-7B-Instruct**.  
-Each model was evaluated on multiple probes (e.g., `ansiescape`, `dan`, `continuation`, etc.).  
-For detailed prompts, responses, and detector logs, see the corresponding HTML reports:
-- **`garak_report_gpt2.html`**  
-- **`garak_report_mistral7b.html`**  
-- **`garak_report_llama2-7b.html`**  
-- **`garak_report_falcon7b.html`**
+This repository contains **Garak** vulnerability scanner results for four different language models:
+
+1. **GPT-2**  
+2. **Mistral-7B**  
+3. **LLaMA 2-7B**  
+4. **Falcon-7B-Instruct**
+
+Each model's scan artifacts (e.g., `garak_report_*.html`) and any relevant notes or logs are organized in separate folders:
 
 ---
 
