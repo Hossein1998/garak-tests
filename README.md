@@ -9,7 +9,6 @@ This repository contains **Garak** vulnerability scanner results for four differ
 
 Each model's scan artifacts (e.g., `garak_report_*.html`) and any relevant notes or logs are organized in separate folders:
 
----
 
 ## 1) GPT-2
 
